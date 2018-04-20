@@ -10,7 +10,6 @@ import com.bootdo.common.utils.R;
 import com.bootdo.common.utils.ShiroUtils;
 import com.bootdo.system.domain.MenuDO;
 import com.bootdo.system.service.MenuService;
-import io.swagger.models.auth.In;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -18,6 +17,7 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,10 +34,10 @@ public class LoginController extends BaseController {
 	MenuService menuService;
 	@Autowired
 	FileService fileService;
+
 	@GetMapping({ "/", "" })
 	String welcome(Model model) {
-
-		return "redirect:/blog";
+		return "redirect:blog";
 	}
 
 	@Log("请求访问主页")
@@ -60,9 +60,19 @@ public class LoginController extends BaseController {
 		return "index_v1";
 	}
 
-	@GetMapping("/login")
+	@GetMapping(
+			value={"/login"},
+			produces = {MediaType.TEXT_HTML_VALUE})
 	String login() {
 		return "login";
+	}
+
+	@GetMapping(
+			value={"/login"},
+			produces = {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	String reAjaxLogin() {
+		return "bu tong guo";
 	}
 
 	@Log("登录")

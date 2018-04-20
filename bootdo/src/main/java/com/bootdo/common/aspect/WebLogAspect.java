@@ -15,6 +15,7 @@ import sun.net.util.IPAddressUtil;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Enumeration;
 
 @Aspect
 @Component
@@ -31,18 +32,27 @@ public class WebLogAspect {
     public void doBefore(JoinPoint joinPoint) throws Throwable {
         // 接收到请求，记录请求内容
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
+        if (attributes != null){
+            HttpServletRequest request = attributes.getRequest();
 
-        // 记录下请求内容
-        logger.info("请求地址 : " + request.getRequestURL().toString());
-        logger.info("HTTP METHOD : " + request.getMethod());
-        // 获取真实的ip地址
-        //logger.info("IP : " + IPAddressUtil.getClientIpAddress(request));
-        logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "."
-                + joinPoint.getSignature().getName());
-        logger.info("参数 : " + Arrays.toString(joinPoint.getArgs()));
+            // 记录下请求内容
+            logger.info("请求地址 : " + request.getRequestURL().toString());
+            logger.info("SessionId : " + request.getSession().getId());
+            logger.info("HTTP METHOD : " + request.getMethod());
+            // 获取真实的ip地址
+//      logger.info("IP : " + IPAddressUtil.getClientIpAddress(request));
+            logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "."
+                    + joinPoint.getSignature().getName());
+            logger.info("参数 : " + Arrays.toString(joinPoint.getArgs()));
 //        loggger.info("参数 : " + joinPoint.getArgs());
-
+//            logger.info("Header : ");
+//            Enumeration headerNames = request.getHeaderNames();
+//            while (headerNames.hasMoreElements()) {
+//                String key = (String) headerNames.nextElement();
+//                String value = request.getHeader(key);
+//                logger.info(key + " : " + value);
+//            }
+        }
     }
 
     @AfterReturning(returning = "ret", pointcut = "logPointCut()")// returning的值和doAfterReturning的参数名一致

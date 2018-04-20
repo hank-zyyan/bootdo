@@ -214,6 +214,13 @@
             <version>1.9.2</version>
         </dependency>
 
+        <!--开启spring boot热部署-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-devtools</artifactId>-->
+            <!--<optional>true</optional> &lt;!&ndash; 这个需要为 true 热部署才有效 &ndash;&gt;-->
+        <!--</dependency>-->
+
         <!--war包部署需要-->
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->

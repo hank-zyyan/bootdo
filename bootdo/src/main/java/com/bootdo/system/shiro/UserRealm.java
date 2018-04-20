@@ -25,15 +25,15 @@ import com.bootdo.system.domain.UserDO;
 import com.bootdo.system.service.MenuService;
 
 public class UserRealm extends AuthorizingRealm {
-/*	@Autowired
+	@Autowired
 	UserDao userMapper;
 	@Autowired
-	MenuService menuService;*/
+	MenuService menuService;
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
 		Long userId = ShiroUtils.getUserId();
-		MenuService menuService = ApplicationContextRegister.getBean(MenuService.class);
+//		MenuService menuService = ApplicationContextRegister.getBean(MenuService.class);
 		Set<String> perms = menuService.listPerms(userId);
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		info.setStringPermissions(perms);
@@ -47,7 +47,7 @@ public class UserRealm extends AuthorizingRealm {
 		map.put("username", username);
 		String password = new String((char[]) token.getCredentials());
 
-		UserDao userMapper = ApplicationContextRegister.getBean(UserDao.class);
+//		UserDao userMapper = ApplicationContextRegister.getBean(UserDao.class);
 		// 查询用户信息
 		UserDO user = userMapper.list(map).get(0);
 

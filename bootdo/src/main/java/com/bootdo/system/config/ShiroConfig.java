@@ -5,7 +5,9 @@ import com.bootdo.common.config.Constant;
 import com.bootdo.common.redis.shiro.RedisCacheManager;
 import com.bootdo.common.redis.shiro.RedisManager;
 import com.bootdo.common.redis.shiro.RedisSessionDAO;
+import com.bootdo.system.shiro.OSSWebSessionManager;
 import com.bootdo.system.shiro.UserRealm;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.SessionListener;
@@ -74,11 +76,11 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/druid/**", "anon");
 		filterChainDefinitionMap.put("/upload/**", "anon");
 		filterChainDefinitionMap.put("/files/**", "anon");
-		filterChainDefinitionMap.put("/logout", "logout");
 		filterChainDefinitionMap.put("/", "anon");
-		filterChainDefinitionMap.put("/blog", "anon");
-		filterChainDefinitionMap.put("/blog/open/**", "anon");
-		filterChainDefinitionMap.put("/**", "authc");
+        filterChainDefinitionMap.put("/blog", "anon");
+        filterChainDefinitionMap.put("/blog/open/**", "anon");
+        filterChainDefinitionMap.put("/logout", "logout");
+        filterChainDefinitionMap.put("/**", "authc");
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 		return shiroFilterFactoryBean;
 	}
@@ -170,7 +172,7 @@ public class ShiroConfig {
      */
     @Bean
     public DefaultWebSessionManager sessionManager() {
-        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        DefaultWebSessionManager sessionManager = new OSSWebSessionManager();
         sessionManager.setGlobalSessionTimeout(tomcatTimeout*1000);
         sessionManager.setSessionDAO(sessionDAO());
         Collection<SessionListener> listeners = new ArrayList<SessionListener>();

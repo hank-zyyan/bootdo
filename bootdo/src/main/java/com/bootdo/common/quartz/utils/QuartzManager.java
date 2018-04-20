@@ -32,7 +32,7 @@ public class QuartzManager {
 	/**
 	 * 添加任务
 	 * 
-	 * @param scheduleJob
+	 * @param job
 	 * @throws SchedulerException
 	 */
 	
